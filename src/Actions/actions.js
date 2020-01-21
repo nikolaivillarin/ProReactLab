@@ -29,5 +29,3 @@ export function toggleTodo(index) {
 export function setVisibilityFilter(filter) {
     return { type: SET_VISIBILITY_FILTER, filter }
 }
-
-/* NIKO YOU ARE HERE -- FINISH CODING THE REDUCERS and take note of the key or what is passed in for each reducer
