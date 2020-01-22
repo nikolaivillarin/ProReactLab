@@ -22,5 +22,3 @@ const FilterLink = connect(
 )(Link)
 
 export default FilterLink
-
-// NIKO YOU LEFT OFF CREATING VisibleTodoList.js
