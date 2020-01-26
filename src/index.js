@@ -1,22 +1,18 @@
-import React from 'react';
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './Components/App';
-import * as serviceWorker from './serviceWorker';
-import todoApp from './Reducers/reducers'
+import thunkMiddleware from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+import { createStore, applyMiddleware } from 'redux'
+import { selectSubreddit, fetchPosts } from './AsyncApp/actions/actions'
+import rootReducer from './AsyncApp/reducers/reducers'
 
-const store = createStore(todoApp)
+const loggerMiddleware = createLogger()
 
-ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>, 
-    document.getElementById('root')
-);
+const store = createStore(
+    rootReducer,
+    applyMiddleware(
+        thunkMiddleware, // lets us dispatch() functions
+        loggerMiddleware // neat middleware that logs actions
+    )
+)
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+store.dispatch(selectSubreddit('reactjs'))
+store.dispatch(fetchPosts('reactjs')).then(() => console.log(store.getState()))
