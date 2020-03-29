@@ -4,6 +4,9 @@ import ProductDisplay from "./ProductDisplay";
 import SupplierDisplay from "./SupplierDisplay";
 
 const ProductsAndSuppliers = props => {
+  console.log(process.env.REACT_APP_CLIENT_ID); 
+  console.log(process.env.REACT_APP_KEY);
+
   const productsDefaults = [
     { id: 1, name: "Kayak", category: "Watersports", price: 275 },
     { id: 2, name: "Lifejacket", category: "Watersports", price: 48.95 },
