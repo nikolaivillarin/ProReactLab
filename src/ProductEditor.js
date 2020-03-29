@@ -12,7 +12,12 @@ const ProductEditor = props => {
   const handleChange = (ev) => {
     ev.persist();
 
-    setFormData(formData[ev.target.name] = ev.target.value);
+    const updatedData = {
+      ...formData,
+      [ev.target.name]: ev.target.value
+    }
+
+    setFormData(updatedData);
   };
 
   const handleClick = () => {

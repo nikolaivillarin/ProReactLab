@@ -15,7 +15,7 @@ const SupplierTable = props => {
       </thead>
       <tbody>
         {
-          this.props.suppliers.map(s => 
+          props.suppliers.map(s => 
             <SupplierTableRow 
               supplier={s}
               key={s.id}

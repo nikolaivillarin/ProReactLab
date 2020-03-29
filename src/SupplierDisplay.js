@@ -40,7 +40,7 @@ const SupplierDisplay = props => {
         <SupplierTable 
           suppliers={props.suppliers}
           editCallback={startEditing}
-          deleteCallback={deleteCallback}
+          deleteCallback={props.deleteCallback}
         />
         <div className="text-center">
           <button

@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductTableRow } from "./ProductTableRow";
+import ProductTableRow from "./ProductTableRow";
 
 const ProductTable = props => {
   return(
@@ -31,12 +31,12 @@ const ProductTable = props => {
       </thead>
       <tbody>
         {
-          this.props.product.map(p => (
+          props.products.map(p => (
             <ProductTableRow 
               product={p}
               key={p.id}
-              editCallback={this.props.editCallback}
-              deleteCallback={this.props.deleteCallback}
+              editCallback={props.editCallback}
+              deleteCallback={props.deleteCallback}
             />
           ))
         }

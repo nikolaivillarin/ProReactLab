@@ -13,12 +13,15 @@ const SupplierEditor = props => {
   const handleChange = (ev) => {
     ev.persist();
 
-    setFormData(
-      formData[ev.target.name] =
+    const updatedData = {
+      ...formData,
+      [ev.target.name]:
         ev.target.name === "products" ?
           ev.target.value.split(",") :
           ev.target.value
-    );
+    };
+
+    setFormData(updatedData);
   };
 
   const handleClick = () => {
@@ -45,7 +48,6 @@ const SupplierEditor = props => {
         <input 
           className="form-control"
           name="name"
-          disabled
           value={formData.name}
           onChange={handleChange}
         />
@@ -55,7 +57,6 @@ const SupplierEditor = props => {
         <input 
           className="form-control"
           name="city"
-          disabled
           value={formData.city}
           onChange={handleChange}
         />
@@ -65,7 +66,6 @@ const SupplierEditor = props => {
         <input 
           className="form-control"
           name="products"
-          disabled
           value={formData.products}
           onChange={handleChange}
         />
