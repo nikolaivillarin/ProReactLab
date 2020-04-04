@@ -1,11 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { saveProduct, endEditing } from "./store";
+import { PRODUCTS } from "./store/dataTypes";
 
 const ProductEditor = props => {
+  const dispatch = useDispatch();
+  const products = useSelector(state => state.modelData[PRODUCTS]);
+  const selectedProductID = useSelector(state => state.stateData.selectedId);
+  
+  let selectedProduct = products.find(product => product.id === selectedProductID);
+
+  if (selectedProduct === undefined) {
+    selectedProduct = {};
+  }
+
   const formDataDefaults = {
-    id: props.product.id || "",
-    name: props.product.name || "",
-    category: props.product.category || "",
-    price: props.product.price || ""
+    id: selectedProduct.id || "",
+    name: selectedProduct.name || "",
+    category: selectedProduct.category || "",
+    price: selectedProduct.price || ""
   };
   const [formData, setFormData] = useState(formDataDefaults);
 
@@ -21,7 +34,8 @@ const ProductEditor = props => {
   };
 
   const handleClick = () => {
-    props.saveCallback(formData);
+    dispatch(saveProduct(formData));
+    dispatch(endEditing());
   };
 
   return (
@@ -72,7 +86,9 @@ const ProductEditor = props => {
         </button>
         <button
           className="btn btn-secondary"
-          onClick={props.cancelCallback}
+          onClick={() => {
+            dispatch(endEditing());
+          }}
         >
           Cancel
         </button>

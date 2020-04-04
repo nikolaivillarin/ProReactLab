@@ -20,7 +20,6 @@ const SupplierTable = props => {
               supplier={s}
               key={s.id}
               editCallback={props.editCallback}
-              deleteCallback={props.deleteCallback}
             />
           )
         }

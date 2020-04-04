@@ -1,6 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteProduct, startEditingProduct } from "./store";
 
 const ProductTableRow = props => {
+  const dispatch = useDispatch();
   let p = props.product;
 
   return (
@@ -12,12 +15,12 @@ const ProductTableRow = props => {
       <td>
         <button
           className="btn btn-sm btn-warning m-1"
-          onClick={() => props.editCallback(p)}>
+          onClick={() => dispatch(startEditingProduct(p))}>
           Edit
         </button>
         <button
           className="btn btn-sm btn-danger m-1"
-          onClick={() => props.deleteCallback(p)}>
+          onClick={() => dispatch(deleteProduct(p))}>
           Delete
         </button>
       </td>

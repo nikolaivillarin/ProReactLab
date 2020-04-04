@@ -1,7 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import ProductTableRow from "./ProductTableRow";
+import { PRODUCTS } from "./store/dataTypes";
 
 const ProductTable = props => {
+  const products = useSelector(state => state.modelData[PRODUCTS]);
+
   return(
     <table className="table table-sm table-striped table-bordered">
       <thead>
@@ -31,12 +35,10 @@ const ProductTable = props => {
       </thead>
       <tbody>
         {
-          props.products.map(p => (
+          products.map(p => (
             <ProductTableRow 
               product={p}
               key={p.id}
-              editCallback={props.editCallback}
-              deleteCallback={props.deleteCallback}
             />
           ))
         }

@@ -1,51 +1,26 @@
-import React, { useState } from "react";
+import React from "react";
 import ProductTable from "./ProductTable";
 import ProductEditor from "./ProductEditor";
+import { useDispatch, useSelector } from "react-redux";
+import { startCreatingProduct } from "./store";
 
 const ProductDisplay = props => {
-  const [showEditor, setShowEditor] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const startEditing = (product) => {
-    setShowEditor(true);
-    setSelectedProduct(product);
-  };
-
-  const createProduct = () => {
-    setShowEditor(true);
-    setSelectedProduct({});
-  };
-
-  const cancelEditing = () => {
-    setShowEditor(false);
-    setSelectedProduct(null);
-  };
-
-  const saveProduct = (product) => {
-    setShowEditor(false);
-    setSelectedProduct(null);
-
-    props.saveCallback(product);
-  };
+  const stateData = useSelector(state => state.stateData);
+  const dispatch = useDispatch();
 
   return (
-    showEditor ?
+    stateData.editing ?
       <ProductEditor 
-        key={selectedProduct.id || -1}
-        product={selectedProduct}
-        saveCallback={saveProduct}
-        cancelCallback={cancelEditing}
+        key={stateData.selectedId || -1}
       /> :
       <div className="m-2">
-        <ProductTable 
-          products={props.products}
-          editCallback={startEditing}
-          deleteCallback={props.deleteCallback}
-        />
+        <ProductTable />
         <div className="text-center">
           <button 
             className="btn btn-primary m-1"
-            onClick={createProduct}
+            onClick={() => {
+              dispatch(startCreatingProduct());
+            }}
           >
             Create Product
           </button>

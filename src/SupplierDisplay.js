@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import SupplierEditor from "./SupplierEditor";
 import SupplierTable from "./SupplierTable";
+import { useDispatch, useSelector } from "react-redux";
+import { saveSupplier } from "./store";
 
 const SupplierDisplay = props => {
   const [showEditor, setShowEditor] = useState(false);
   const [selected, setSelected] = useState(null);
+  const suppliers = useSelector(state => state.suppliers);
+  const dispatch = useDispatch();
 
   const startEditing = (supplier) => {
     setShowEditor(true);
@@ -21,11 +25,11 @@ const SupplierDisplay = props => {
     setSelected(null);
   };
 
-  const saveSupplier = (supplier) => {
+  const saveSupplierCallback = (supplier) => {
     setShowEditor(false);
     setSelected(null);
 
-    props.saveCallback(supplier);
+    dispatch(saveSupplier(supplier));
   };
 
   return (
@@ -33,14 +37,13 @@ const SupplierDisplay = props => {
       <SupplierEditor 
         key={selected.id || -1}
         supplier={selected}
-        saveCallback={saveSupplier}
+        saveCallback={saveSupplierCallback}
         cancelCallback={cancelEditing}
       /> :
       <div className="m-2">
         <SupplierTable 
-          suppliers={props.suppliers}
+          suppliers={suppliers}
           editCallback={startEditing}
-          deleteCallback={props.deleteCallback}
         />
         <div className="text-center">
           <button

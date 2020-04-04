@@ -1,6 +1,9 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { deleteSupplier } from "./store";
 
 const SupplierTableRow = props => {
+  const dispatch = useDispatch();
   let s = props.supplier;
 
   return (
@@ -18,7 +21,7 @@ const SupplierTableRow = props => {
         </button>
         <button
           className="btn btn-sm btn-danger m-1"
-          onClick={() => props.deleteCallback(s)}
+          onClick={() => dispatch(deleteSupplier(s))}
         >
           Delete
         </button>
