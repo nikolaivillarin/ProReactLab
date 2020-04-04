@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { deleteSupplier } from "./store";
+import { deleteSupplier, startEditingSupplier } from "./store";
 
 const SupplierTableRow = props => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const SupplierTableRow = props => {
       <td>
         <button
           className="btn btn-sm btn-warning m-1"
-          onClick={() => props.editCallback(s)}
+          onClick={() => dispatch(startEditingSupplier(s))}
         >
           Edit
         </button>

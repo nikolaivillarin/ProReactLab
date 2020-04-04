@@ -1,7 +1,11 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import SupplierTableRow from "./SupplierTableRow";
+import { SUPPLIERS } from "./store/dataTypes";
 
 const SupplierTable = props => {
+  const suppliers = useSelector(state => state.modelData[SUPPLIERS]);
+
   return (
     <table className="table table-sm table-striped table-bordered">
       <thead>
@@ -15,11 +19,10 @@ const SupplierTable = props => {
       </thead>
       <tbody>
         {
-          props.suppliers.map(s => 
+          suppliers.map(s => 
             <SupplierTableRow 
               supplier={s}
               key={s.id}
-              editCallback={props.editCallback}
             />
           )
         }

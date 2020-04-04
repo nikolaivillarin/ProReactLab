@@ -1,11 +1,24 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { saveSupplier, endEditing } from "./store";
+import { SUPPLIERS } from "./store/dataTypes";
 
 const SupplierEditor = props => {
+  const dispatch = useDispatch();
+  const suppliers = useSelector(state => state.modelData[SUPPLIERS]);
+  const selectedSupplierID = useSelector(state => state.stateData.selectedId);
+
+  let selectedSupplier = suppliers.find(supplier => supplier.id === selectedSupplierID);
+
+  if (selectedSupplier === undefined) {
+    selectedSupplier = {};
+  }
+
   const formDataDefault = {
-    id: props.supplier.id || "",
-    name: props.supplier.name || "",
-    city: props.supplier.city || "",
-    products: props.supplier.products || []
+    id: selectedSupplier.id || "",
+    name: selectedSupplier.name || "",
+    city: selectedSupplier.city || "",
+    products: selectedSupplier.products || []
   };
 
   const [formData, setFormData] = useState(formDataDefault);
@@ -25,10 +38,8 @@ const SupplierEditor = props => {
   };
 
   const handleClick = () => {
-    props.saveCallback({
-      ...formData,
-      products: formData.products.map(val => Number(val))
-    });
+    dispatch(saveSupplier(formData));
+    dispatch(endEditing());
   };
 
   return (
@@ -79,7 +90,9 @@ const SupplierEditor = props => {
         </button>
         <button
           className="btn btn-secondary"
-          onClick={props.cancelCallback}
+          onClick={() => {
+            dispatch(endEditing());
+          }}
         >
           Cancel
         </button>
