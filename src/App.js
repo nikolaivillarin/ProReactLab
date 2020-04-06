@@ -4,6 +4,7 @@ import dataStore from "./store";
 import Selector from "./Selector";
 import ProductDisplay from "./ProductDisplay";
 import SupplierDisplay from "./SupplierDisplay";
+import StoreAccess from "./store/storeAccess";
 
 function App() {
   return (

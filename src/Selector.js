@@ -1,43 +1,67 @@
 import React, { useState } from "react";
+import {
+  BrowserRouter as Router,
+  NavLink,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
+import ProductDisplay from "./ProductDisplay";
+import SupplierDisplay from "./SupplierDisplay";
 
-const Selector = props => {
-  const [selection, setSelectionState] = 
-    useState(React.Children.toArray(props.children)[0].props.name);
-
-  const setSelection = (ev) => {
-    ev.persist();
-
-    setSelectionState(ev.target.name);
-  };
+const Selector = (props) => {
+  const renderMessage = (msg) => (
+    <h5 className="bg-info text-white m-2 p-2">{msg}</h5>
+  );
 
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-2">
-          {
-            React.Children.map(props.children, c =>
-              <button
-                name={c.props.name}
-                onClick={setSelection}
-                className={`
-                  btn btn-block m-2
-                  ${selection === c.props.name ?
-                    "btn-primary active" : "btn-secondary"}
-                `}
+    <Router>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-2">
+            <div>
+              <NavLink
+                to="/"
+                className="btn btn-block m-2 btn-primary"
+                activeClassName="active"
+                exact={true}
               >
-                {c.props.name}
-              </button>
-            )
-          }
-        </div>
-        <div className="col">
-          {
-            React.Children.toArray(props.children)
-              .filter(c => c.props.name === selection)
-          }
+                Default URL
+              </NavLink>
+              <NavLink
+                to="/products"
+                className="btn btn-block m-2 btn-primary"
+                activeClassName="active"
+              >
+                Products
+              </NavLink>
+              <NavLink
+                to="/suppliers"
+                className="btn btn-block m-2 btn-primary"
+                activeClassName="active"
+              >
+                Suppliers
+              </NavLink>
+              <NavLink
+                to="/old/data"
+                className="btn btn-block m-2 btn-primary"
+                activeClassName="active"
+              >
+                Old Link
+              </NavLink>
+            </div>
+          </div>
+          <div className="col">
+            <Switch>
+              <Route path="/products" component={ProductDisplay} />
+              <Route path="/suppliers" component={SupplierDisplay} />
+              <Redirect from="/old/data" to="/suppliers" />
+              <Redirect to="/products" />
+            </Switch>
+          </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
 };
 
